@@ -5,15 +5,23 @@ import 'package:qgl_get_rewrite/services/graphqlConf.dart';
 import 'package:qgl_get_rewrite/services/queryMutation.dart';
 
 class HomeController extends GetxController {
-    List<Person> listPerson = <Person>[];
-    GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+  List<Person> listPerson = <Person>[].obs;
+  var isLoading = false.obs;
 
- @override
+  GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+
+  @override
   void onInit() {
-    super.onInit();
     fillList();
+    super.onInit();
   }
+
+  void cleanList() async {
+    listPerson.clear();
+  }
+
   void fillList() async {
+    isLoading(true);
     QueryMutation queryMutation = QueryMutation();
     GraphQLClient _client = graphQLConfiguration.clientToQuery();
     QueryResult result = await _client.query(
@@ -23,17 +31,16 @@ class HomeController extends GetxController {
     );
     if (!result.hasException) {
       for (var i = 0; i < result.data?["persons"].length; i++) {
-          listPerson.add(
-            Person(
-              result.data?["persons"][i]["id"],
-              result.data?["persons"][i]["name"],
-              result.data?["persons"][i]["lastName"],
-              result.data?["persons"][i]["age"],
-            ),
-          );
-      
+        listPerson.add(
+          Person(
+            result.data?["persons"][i]["id"],
+            result.data?["persons"][i]["name"],
+            result.data?["persons"][i]["lastName"],
+            result.data?["persons"][i]["age"],
+          ),
+        );
       }
+      isLoading(false);
     }
   }
-  
 }
