@@ -21,13 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Persons',
       theme: ThemeData(
-       primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: "/",
       getPages: [
-        GetPage(name: "/", page: () => const HomeView(), binding: HomeBinding() ),
+        GetPage(name: "/", page: () => HomeView(), binding: HomeBinding()),
       ],
     );
   }

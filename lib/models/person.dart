@@ -1,10 +1,10 @@
 class Person {
   Person(this.id, this.name, this.lastName, this.age);
 
-  final String? id;
-  final String? name;
-  final String? lastName;
-  final int? age;
+  late String? id;
+  late String? name;
+  late String? lastName;
+  late int? age;
 
   getId() => id;
 
